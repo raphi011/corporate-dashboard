@@ -1,2 +1,4 @@
 node_modules/
 bundle.js
+dist/main.css
+dist/main.js
