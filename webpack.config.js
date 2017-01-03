@@ -42,11 +42,10 @@ const config = {
 if (prod) {
   config.entry = './index.jsx';
 } else {
-  config.plugins.push(
-    new webpack.HotModuleReplacementPlugin()
-  );
+  config.plugins.push(new webpack.HotModuleReplacementPlugin());
   config.devServer = {
     hot: true,
+    historyApiFallback: true,
     host,
     port,
 

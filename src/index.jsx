@@ -2,28 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
+import { Router, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
-import App from './components/App';
+import routes from './routes';
 import configureStore from './configureStore';
 
 const store = configureStore(undefined);
+const history = syncHistoryWithStore(browserHistory, store);
 
-const render = (Component) => {
+const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <Component />
+        <Router history={history} routes={routes} />
       </Provider>
     </AppContainer>,
     document.getElementById('root'),
   );
 };
 
-render(App);
+render();
 
 if (module.hot) {
-  module.hot.accept('./components/App', () => {
-    const NewApp = require('./components/App').default;
-    render(NewApp);
-  });
+  module.hot.accept('./routes', render);
 }
