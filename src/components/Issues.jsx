@@ -1,27 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import Header from 'grommet/components/Header';
 import Title from 'grommet/components/Title';
 import Box from 'grommet/components/Box';
-import Menu from 'grommet/components/Menu';
-import FilterControl from 'grommet-addons/components/FilterControl';
 
 import IssuesTable from './IssuesTable';
-import { getIssues } from '../api';
+import { fetchIssues } from '../actions/metrics';
 
 class Issues extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      issues: [],
-    };
-  }
-
   componentDidMount() {
-    getIssues().then((issues) => {
-      self.setState({ issues });
-    });
+    const { getIssues } = this.props;
+
+    getIssues();
+    // .then((issues) => {
+    //   self.setState({ issues });
+    // });
 
     // const self = this;
 
@@ -36,21 +30,26 @@ class Issues extends Component {
   }
 
   render() {
+    const { issues } = this.props;
     return (
       <Box>
         <Header pad="medium" >
           <Title>Issues</Title>
           <Box justify="end" direction="row" responsive={false} flex>
             <div style={{ width: '100%' }} />
-            <Menu dropAlign={{ right: 'right' }} >
-              <FilterControl unfilteredTotal={100} filteredTotal={50} onClick={() => console.log('filter!')} />
-            </Menu>
           </Box>
         </Header>
-        <IssuesTable issues={this.state.issues} />
+        <IssuesTable issues={issues} />
       </Box>
     );
   }
 }
 
-export default Issues;
+Issues.propTypes = {
+  issues: PropTypes.array,
+  getIssues: PropTypes.func,
+};
+
+export default connect(
+  state => ({ issues: state.issues }),
+  { getIssues: fetchIssues })(Issues);

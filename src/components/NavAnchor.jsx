@@ -9,7 +9,9 @@ export default class NavAnchor extends Component {
   }
 
   onClick(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     this.context.router.push(this.props.path);
     if (this.props.onClick) {
       this.props.onClick();

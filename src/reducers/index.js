@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-import metrics from './metrics';
+import issues from './issues';
+import branches from './branches';
 
 export default combineReducers({
-  metrics,
+  issues,
+  branches,
   routing: routerReducer,
 });
