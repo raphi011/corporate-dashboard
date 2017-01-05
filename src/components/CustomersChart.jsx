@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Chart, { Axis, Base, Layers, Bar  } from 'grommet/components/chart/Chart';
+import Chart, { Axis, Base, Layers, Line } from 'grommet/components/chart/Chart';
 import Moment from 'moment';
 
-class IssuesChart extends Component {
+class CustomersChart extends Component {
   constructor(props) {
     super(props);
 
@@ -10,12 +10,12 @@ class IssuesChart extends Component {
   }
 
   getSteps() {
-    const { issues } = this.props;
+    const { customers } = this.props;
 
-    if (!issues) return [];
+    if (!customers) return [];
 
-    const labels = issues
-      .map(i => new Moment(i.submissionTimestamp).format('YYYY-MM'))
+    const labels = customers
+      .map(i => new Moment(i.transactionTimestamp).format('YYYY-MM'))
       .sort()
       .reduce((a, month) => {
         if (a.length) {
@@ -37,15 +37,13 @@ class IssuesChart extends Component {
   render() {
     const steps = this.getSteps();
 
-    if (!steps.length) return <div>No issues available</div>;
+    if (!steps.length) return <div>No customers available</div>;
 
     const xLabels = [{ index: 0, label: steps[0].label }, { index: 1, label: steps[steps.length - 1].label }];
     const values = steps.map(l => l.count);
     const min = Math.min(...values);
     const max = Math.max(...values);
     const yLabels = [{ index: 0, label: '0' }, { index: 1, label: max }];
-
-    console.log(xLabels);
 
     return (<Chart full>
       <Axis
@@ -60,7 +58,7 @@ class IssuesChart extends Component {
           width="medium"
           />
         <Layers>
-          <Bar
+          <Line
             min={min}
             max={max}
             values={values}
@@ -79,4 +77,5 @@ class IssuesChart extends Component {
   }
 }
 
-export default IssuesChart;
+export default CustomersChart;
+

@@ -15,3 +15,10 @@ export function getBranches() {
   return fetch(branchesUrl)
     .then(response => response.json());
 }
+
+const customersUrl = 'https://mockaroo.com/43ecb650/download?count=50&key=c8505e10';
+
+export function getCustomers() {
+  return fetch(customersUrl)
+    .then(response => response.json());
+}

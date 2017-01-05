@@ -7,13 +7,16 @@ import Box from 'grommet/components/Box';
 import Title from 'grommet/components/Title';
 
 import { fetchIssues } from '../actions/metrics';
+import { fetchCustomers } from '../actions/customers';
 import IssuesChart from './IssuesChart';
+import CustomersChart from './CustomersChart';
 
 class Metrics extends Component {
   componentDidMount() {
-    const { getIssues } = this.props;
+    const { getIssues, getCustomers } = this.props;
 
     getIssues();
+    getCustomers();
     // .then((issues) => {
     //   self.setState({ issues });
     // });
@@ -31,14 +34,16 @@ class Metrics extends Component {
   }
 
   render() {
-    const { issues } = this.props;
+    const { issues, customers } = this.props;
     return (
-      <Box pad="medium">
+      <Box pad="medium" full>
         <Header >
           <Title>Metrics</Title>
         </Header>
         <Heading tag="h4">Issues (Open: {issues.filter(i => i.status === 'true').length})</Heading >
         <IssuesChart issues={issues} />
+        <Heading tag="h4">Customers</Heading >
+        <CustomersChart customers={customers} />
       </Box>
     );
   }
@@ -46,9 +51,11 @@ class Metrics extends Component {
 
 Metrics.propTypes = {
   issues: PropTypes.array,
+  customers: PropTypes.array,
   getIssues: PropTypes.func,
+  getCustomers: PropTypes.func,
 };
 
 export default connect(
-  state => ({ issues: state.issues }),
-  { getIssues: fetchIssues })(Metrics);
+  state => ({ issues: state.issues, customers: state.customers }),
+  { getIssues: fetchIssues, getCustomers: fetchCustomers })(Metrics);
