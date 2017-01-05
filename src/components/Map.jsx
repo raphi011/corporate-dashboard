@@ -68,7 +68,9 @@ class Map extends Component {
     const { getBranches } = this.props;
     const self = this;
 
-    // this.interval = setInterval(() => getBranches(), 10000);
+    getBranches();
+
+    this.interval = setInterval(() => getBranches(), 10000);
   }
 
   render() {

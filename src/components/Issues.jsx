@@ -13,20 +13,12 @@ class Issues extends Component {
     const { getIssues } = this.props;
 
     getIssues();
-    // .then((issues) => {
-    //   self.setState({ issues });
-    // });
 
-    // const self = this;
-
-    // this.interval = setInterval(() => getIssues().then((issues) => {
-    //   self.setState({ issues });
-    // }),
-    //   10000);
+    this.interval = setInterval(getIssues, 10000);
   }
 
   componentWillUnmount() {
-    // clearInterval(this.interval);
+    clearInterval(this.interval);
   }
 
   render() {

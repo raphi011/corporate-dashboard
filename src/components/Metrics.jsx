@@ -17,20 +17,15 @@ class Metrics extends Component {
 
     getIssues();
     getCustomers();
-    // .then((issues) => {
-    //   self.setState({ issues });
-    // });
 
-    // const self = this;
-
-    // this.interval = setInterval(() => getIssues().then((issues) => {
-    //   self.setState({ issues });
-    // }),
-    //   10000);
+    this.interval = setInterval(() => {
+      getIssues();
+      getCustomers();
+    }, 10000);
   }
 
   componentWillUnmount() {
-    // clearInterval(this.interval);
+    clearInterval(this.interval);
   }
 
   render() {
